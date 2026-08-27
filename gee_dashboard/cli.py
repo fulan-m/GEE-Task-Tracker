@@ -122,7 +122,7 @@ def create_progress_display(tasks_dict, width):
     else:
         progress_pct = (completed / total) * 100
     
-    bar_width = max(1, width - 1)
+    bar_width = max(10, width - 10)
     
     progress_display = Table(title="", box=None, padding=(0, 1))
     progress_display.add_column(style=f"bold {NEON_PURPLE}", justify="center")
@@ -132,7 +132,7 @@ def create_progress_display(tasks_dict, width):
     
     return Panel(
         progress_display,
-        title=f"[bold {NEON_PURPLE}]Progress[/bold {NEON_PURPLE}]",
+        title=f"[bold {NEON_PURPLE}]Tasks Progress (Ready/Completed)[/bold {NEON_PURPLE}]",
         border_style=PURPLE
     )
 
