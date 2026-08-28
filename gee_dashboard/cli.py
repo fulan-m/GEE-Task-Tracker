@@ -214,7 +214,7 @@ def create_dashboard(tasks_dict, console_width=None):
     layout.split(
         Layout(name="header", size=3),
         Layout(name="body"),
-        Layout(name="footer", size=3)
+        Layout(name="footer", size=4)
     )
     
     layout["body"].split_row(
@@ -289,12 +289,21 @@ def create_dashboard(tasks_dict, console_width=None):
         border_style=PURPLE
     ))
     
-    footer_text = Text("Press Ctrl+C to exit", style="dim italic")
+# Footer construction
+    footer_text = Text(justify="center")
+    
+    # 1. Top line: Ctrl+C and failed task status
+    footer_text.append("Press Ctrl+C to exit", style="dim italic")
     failed_count = len(tasks_dict.get('FAILED', []))
     if failed_count > 0:
-        footer_text.append(f" | {failed_count} failed tasks detected!", style="bold #ff4444")
-    layout["footer"].update(Panel(Align.center(footer_text), style=DARK_PURPLE))
+        footer_text.append(f"  •  {failed_count} failed tasks detected!", style="bold #ff0044")
     
+    # 2. Bottom line: Quota link
+    footer_text.append("\nCheck EECU limit here: ", style="dim")
+    footer_text.append("https://console.cloud.google.com/iam-admin/quotas", style=f"underline {ACCENT}")
+
+    layout["footer"].update(Panel(footer_text, style=DARK_PURPLE))
+        
     return layout
 
 def main():
